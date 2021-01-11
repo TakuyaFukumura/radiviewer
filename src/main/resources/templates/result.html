@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'result')}">
+
+<body>
+	アップ成功？
+	<ul th:each="content : ${contents}">
+		<li th:text="${content}" />
+	</ul>
+</body>
+</html>

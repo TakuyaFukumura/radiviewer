@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+	csvファイルを選択してください
+	<form action="/result" method="post" enctype="multipart/form-data">
+		<input type="file" name="csv_file"  accept=".csv">
+		<button type="submit">送信する</button>
+	</form>
+</body>
+</html>
