@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,14 +50,22 @@ public class ResultController {
 	private List<String> fileContents(MultipartFile uploadFile) {
         List<String> lines = new ArrayList<String>();
         String line = null;
+        CSVParser parse = null;
         try {
             InputStream stream = uploadFile.getInputStream();
             Reader reader = new InputStreamReader(stream,"SJIS"); //参考ページ：https://dev.classmethod.jp/articles/csv_read_java_char_trans/
             BufferedReader buf= new BufferedReader(reader);
-            while((line = buf.readLine()) != null) {
-                lines.add(line);
+
+            // CSVファイルをパース
+            parse = CSVFormat.EXCEL.withHeader().parse(buf);
+            // レコードのリストに変換
+            List<CSVRecord> recordList = parse.getRecords();
+            // 各レコードを標準出力に出力＆画面表示用のリストに格納
+            for (CSVRecord record : recordList) { //参考ページ：http://itref.fc2web.com/java/commons/csv.html
+                System.out.println(record);
+                String lastName = record.get("msg"); //test.csv用
+                lines.add(lastName);
             }
-            line = buf.readLine();
 
         } catch (IOException e) {
             line = "Can't read contents.";
