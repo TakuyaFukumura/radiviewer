@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.Dto.DividendlistDto;
+import com.example.Dto.DividendDto;
 
 /**
  * @author fukumura
@@ -39,7 +39,7 @@ public class ResultController {
 	@PostMapping
 	public String index(@RequestParam("csv_file")MultipartFile csv_file, Map<String, Object> model) {
 		if(csv_file != null) {
-			List<DividendlistDto> contents = this.fileContents(csv_file);
+			List<DividendDto> contents = this.fileContents(csv_file);
 			model.put("contents", contents);
 		}
 		return "result";
@@ -48,10 +48,10 @@ public class ResultController {
     /*
      * ファイル内容を文字列化するメソッドです。
      */
-	private List<DividendlistDto> fileContents(MultipartFile uploadFile) {
+	private List<DividendDto> fileContents(MultipartFile uploadFile) {
         CSVParser parse = null;
 
-        List<DividendlistDto> dividendlistDtoList = new ArrayList<DividendlistDto>();
+        List<DividendDto> dividendDtoList = new ArrayList<DividendDto>();
         try {
             InputStream stream = uploadFile.getInputStream();
             Reader reader = new InputStreamReader(stream,"SJIS"); //参考ページ：https://dev.classmethod.jp/articles/csv_read_java_char_trans/
@@ -63,20 +63,20 @@ public class ResultController {
             List<CSVRecord> recordList = parse.getRecords();
             // 各レコードを標準出力に出力＆画面表示用のリストに格納
             for (CSVRecord record : recordList) { //参考ページ：http://itref.fc2web.com/java/commons/csv.html
-            	DividendlistDto dividendlistDto = new DividendlistDto(record.get("入金日"),
+            	DividendDto dividendDto = new DividendDto(record.get("入金日"),
             			record.get("商品"),record.get("口座"),
             			record.get("銘柄コード"),record.get("銘柄"),
             			record.get("単価[円/現地通貨]"),record.get("数量[株/口]"),
             			record.get("配当・分配金合計（税引前）[円/現地通貨]"),
             			record.get("税額合計[円/現地通貨]"),record.get("受取金額[円/現地通貨]"));
 
-                dividendlistDtoList.add(dividendlistDto);
+                dividendDtoList.add(dividendDto);
             }
 
         } catch (IOException e) { // csv読み込み失敗時
             e.printStackTrace();
         }
-        return dividendlistDtoList;
+        return dividendDtoList;
     }
 
 }

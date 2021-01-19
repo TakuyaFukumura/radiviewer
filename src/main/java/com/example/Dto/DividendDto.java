@@ -26,7 +26,7 @@ import java.util.Date;
  * @author fukumura
  *
  */
-public class DividendlistDto {
+public class DividendDto {
 	private Date paymentDay;
 	private String product;
 	private String account;
@@ -40,7 +40,7 @@ public class DividendlistDto {
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-	public DividendlistDto() {
+	public DividendDto() {
 
 	}
 	/**
@@ -55,7 +55,7 @@ public class DividendlistDto {
 	 * @param tax
 	 * @param afterTaxDividendIncome
 	 */
-	public DividendlistDto(Date paymentDay, String product,
+	public DividendDto(Date paymentDay, String product,
 			String account, String issueCode, String issue,
 			BigDecimal unitPrice, BigDecimal unit,
 			BigDecimal beforeTaxDividendIncome, BigDecimal tax,
@@ -84,7 +84,7 @@ public class DividendlistDto {
 	 * @param tax
 	 * @param afterTaxDividendIncome
 	 */
-	public DividendlistDto(String paymentDay, String product, String account, String issueCode, String issue,
+	public DividendDto(String paymentDay, String product, String account, String issueCode, String issue,
 			String unitPrice, String unit, String beforeTaxDividendIncome, String tax,
 			String afterTaxDividendIncome) {
 		super();
