@@ -28,8 +28,8 @@ import com.example.Dto.DividendDto;
  *
  */
 @Controller
-@RequestMapping("/result")
-public class ResultController {
+@RequestMapping("/table")
+public class TableController {
 
 	/*
 	 * 参考ページ
@@ -42,7 +42,7 @@ public class ResultController {
 			List<DividendDto> contents = this.fileContents(csv_file);
 			model.put("contents", contents);
 		}
-		return "result";
+		return "table";
 	}
 
     /*
