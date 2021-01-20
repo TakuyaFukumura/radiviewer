@@ -18,7 +18,7 @@
       <th>受取金額[円/現地通貨]</th>
     </tr>
     <tr th:each="content : ${contents}">
-      <td th:text="${content.getPaymentDay()}"></td>
+      <td th:text="${content.getPaymentDay(true)}"></td>
       <td>[[${content.getProduct()}]]</td>
       <td th:text="${content.getAccount()}"></td>
       <td th:text="${content.getIssueCode()}"></td>
