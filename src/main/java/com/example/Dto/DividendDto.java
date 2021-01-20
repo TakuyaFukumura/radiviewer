@@ -110,6 +110,24 @@ public class DividendDto {
 		return paymentDay;
 	}
 	/**
+	 * フォーマットを適用して文字列型で返す<br>
+	 * true "yyyy/MM/dd"<br>
+	 * false "yyyy-MM-dd"
+	 * @param flag
+	 * @return paymentDay
+	 */
+	public String getPaymentDay(boolean flag) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String strDate = "";
+		if(flag) {
+			dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			strDate = dateFormat.format(paymentDay);
+		}else {
+			strDate = dateFormat.format(paymentDay);
+		}
+		return strDate;
+	}
+	/**
 	 * @param paymentDay セットする paymentDay
 	 */
 	public void setPaymentDay(Date paymentDay) {
