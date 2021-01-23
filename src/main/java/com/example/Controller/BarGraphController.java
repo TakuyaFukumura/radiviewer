@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Dto.DividendDto;
@@ -33,7 +33,7 @@ public class BarGraphController {
 	 * https://qiita.com/nvtomo1029/items/316c5e8fe5d0cd92339c
 	 * https://qiita.com/misskabu/items/81fa2c774f92c63125b5
 	 */
-	@PostMapping
+	@GetMapping
 	public String index( Map<String, Object> model) {
 
 		@SuppressWarnings("unchecked")
