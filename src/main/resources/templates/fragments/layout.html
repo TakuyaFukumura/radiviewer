@@ -1,16 +1,17 @@
 <!doctype html>
 <html th:fragment="layout (template, menu)">
 <head>
-    <title>radiviewer</title>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<title>radiviewer</title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 </head>
 
 <body>
-	<a href="/">TOP</a>　
-	<a href="/menu">MENU</a><br>
-    <div th:replace="${template}"/>
+	<a href="/">TOP</a>
+	<a href="/menu">MENU</a>
+	<br>
+	<div th:replace="${template}" />
 
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>

@@ -28,13 +28,8 @@ public class TableController {
 	@Autowired
 	HttpSession session;
 
-	/*
-	 * 参考ページ
-	 * https://qiita.com/nvtomo1029/items/316c5e8fe5d0cd92339c
-	 * https://qiita.com/misskabu/items/81fa2c774f92c63125b5
-	 */
 	@GetMapping
-	public String index( Map<String, Object> model ) {
+	public String index(Map<String, Object> model) {
 		@SuppressWarnings("unchecked")
 		List<DividendDto> dividendDtoList = (List<DividendDto>) session.getAttribute("dividendDtoList");
 
