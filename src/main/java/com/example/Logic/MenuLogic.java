@@ -22,7 +22,7 @@ import com.example.Dto.DividendDto;
  * @author fukumura
  *
  */
-public class TableLogic {
+public class MenuLogic {
 	/**
 	 * ファイル内容を文字列化するメソッドです。
 	 * @param uploadFile 読みこんだCSVデータ

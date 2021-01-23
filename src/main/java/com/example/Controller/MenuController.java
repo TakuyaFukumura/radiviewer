@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Dto.DividendDto;
-import com.example.Logic.TableLogic;
+import com.example.Logic.MenuLogic;
 
 /**
  * @author fukumura
@@ -26,14 +26,14 @@ import com.example.Logic.TableLogic;
 @Controller
 @RequestMapping("/menu")
 public class MenuController {
-	TableLogic tableLogic = new TableLogic();
+	MenuLogic menuLogic = new MenuLogic();
 
 	@Autowired
 	HttpSession session;
 
 	@PostMapping
 	public String index(@RequestParam("csv_file") MultipartFile csv_file, Map<String, Object> model) {
-		List<DividendDto> contents = tableLogic.fileContents(csv_file);
+		List<DividendDto> contents = menuLogic.fileContents(csv_file);
 		session.setAttribute("dividendDtoList", contents);
 		return "menu";
 	}

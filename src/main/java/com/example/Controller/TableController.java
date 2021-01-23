@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Dto.DividendDto;
-import com.example.Logic.TableLogic;
 
 /**
  * @author fukumura
@@ -23,7 +22,6 @@ import com.example.Logic.TableLogic;
 @Controller
 @RequestMapping("/table")
 public class TableController {
-	TableLogic tableLogic = new TableLogic();
 
 	@Autowired
 	HttpSession session;
