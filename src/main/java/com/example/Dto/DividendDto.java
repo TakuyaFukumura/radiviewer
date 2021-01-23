@@ -112,12 +112,12 @@ public class DividendDto {
 	/**
 	 * フォーマットを適用して文字列型で返す<br>
 	 * true "yyyy/MM/dd"<br>
-	 * false "yyyy-MM-dd"
+	 * false "yyyyMM"
 	 * @param flag
 	 * @return paymentDay
 	 */
 	public String getPaymentDay(boolean flag) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMM");
 		String strDate = "";
 		if(flag) {
 			dateFormat = new SimpleDateFormat("yyyy/MM/dd");

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'barGraph')}">
+
+<body>
+	<h1>棒グラフ</h1>
+	USD/JPY 100 で計算しています。<br>
+	<canvas id="barChart"></canvas>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js"></script>
+
+	<script>
+		var ctx = document.getElementById("barChart");
+		var myBarChart = new Chart(ctx, {
+			type : 'bar',
+			data : {
+				labels : [ "1月","2月","3月","4月","5月","6月","7月",
+			    	  "8月", "9月", "10月", "11月", "12月" ],
+				datasets : [ {
+					label : '2019年 配当受取額',
+					data : [ [[${contents[0]}]] ],
+					backgroundColor : "rgba(219,39,91,0.5)"
+				}, {
+					label : '2020年 配当受取額',
+					data : [ [[${contents[1]}]] ],
+					backgroundColor : "rgba(130,201,169,0.5)"
+				}, {
+					label : '2021年 配当受取額',
+					data : [ [[${contents[2]}]] ],
+					backgroundColor : "rgba(255,183,76,0.5)"
+				} ]
+			},
+			options : {
+				title : {
+					display : true,
+					text : '月別配当受取額  年比較グラフ'
+				},
+				scales : {
+					yAxes : [ {
+						ticks : {
+							suggestedMax : 100,
+							suggestedMin : 0,
+							stepSize : 10,
+							callback : function(value, index, values) {
+								return value + '円'
+							}
+						}
+					} ]
+				},
+			}
+		});
+	</script>
+</body>
+</html>

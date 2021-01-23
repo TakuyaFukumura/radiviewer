@@ -12,20 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Dto.DividendDto;
-import com.example.Logic.TableLogic;
+import com.example.Logic.BarGraphLogic;
 
 /**
  * @author fukumura
  *
  */
 @Controller
-@RequestMapping("/table")
-public class TableController {
-	TableLogic tableLogic = new TableLogic();
+@RequestMapping("/barGraph")
+public class BarGraphController {
+	BarGraphLogic barGraphLogic = new BarGraphLogic();
 
 	@Autowired
 	HttpSession session;
@@ -36,12 +34,18 @@ public class TableController {
 	 * https://qiita.com/misskabu/items/81fa2c774f92c63125b5
 	 */
 	@PostMapping
-	public String index(@RequestParam("csv_file")MultipartFile csv_file, Map<String, Object> model) {
-		if(csv_file != null) {
-			List<DividendDto> contents = tableLogic.fileContents(csv_file);
-			model.put("contents", contents); // html側にデータ送るやつ
-			session.setAttribute("dividendDtoList", contents);
+	public String index( Map<String, Object> model) {
+
+		@SuppressWarnings("unchecked")
+		List<DividendDto> dividendDtoList = (List<DividendDto>) session.getAttribute("dividendDtoList");  // 取得
+
+		//session.invalidate(); // クリア
+
+		if(dividendDtoList != null) {
+			String[] deta = barGraphLogic.getCartData(dividendDtoList);
+			model.put("contents", deta); // html側にデータ送るやつ
 		}
-		return "table";
+
+		return "barGraph";
 	}
 }
