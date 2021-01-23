@@ -6,6 +6,9 @@ package com.example.Controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,9 @@ import com.example.Logic.TableLogic;
 public class TableController {
 	TableLogic tableLogic = new TableLogic();
 
+	@Autowired
+	HttpSession session;
+
 	/*
 	 * 参考ページ
 	 * https://qiita.com/nvtomo1029/items/316c5e8fe5d0cd92339c
@@ -34,6 +40,7 @@ public class TableController {
 		if(csv_file != null) {
 			List<DividendDto> contents = tableLogic.fileContents(csv_file);
 			model.put("contents", contents); // html側にデータ送るやつ
+			session.setAttribute("dividendDtoList", contents);
 		}
 		return "table";
 	}
