@@ -5,30 +5,30 @@
 <body>
 	<h1>一覧表</h1>
 	<table border="1">
-    <tr>
-      <th>入金日</th>
-      <th>商品</th>
-      <th>口座</th>
-      <th>銘柄コード</th>
-      <th>銘柄</th>
-      <th>単価[円/現地通貨]</th>
-      <th>数量[株/口]</th>
-      <th>配当・分配金合計（税引前）[円/現地通貨]</th>
-      <th>税額合計[円/現地通貨]</th>
-      <th>受取金額[円/現地通貨]</th>
-    </tr>
-    <tr th:each="content : ${contents}">
-      <td th:text="${content.getPaymentDay(true)}"></td>
-      <td>[[${content.getProduct()}]]</td>
-      <td th:text="${content.getAccount()}"></td>
-      <td th:text="${content.getIssueCode()}"></td>
-      <td th:text="${content.getIssue()}"></td>
-      <td th:text="${content.getUnitPrice()}"></td>
-      <td th:text="${content.getUnit()}"></td>
-      <td th:text="${content.getBeforeTaxDividendIncome()}"></td>
-      <td th:text="${content.getTax()}"></td>
-      <td th:text="${content.getAfterTaxDividendIncome()}"></td>
-    </tr>
-  </table>
+		<tr>
+			<th>入金日</th>
+			<th>商品</th>
+			<th>口座</th>
+			<th>銘柄コード</th>
+			<th>銘柄</th>
+			<th>単価[円/現地通貨]</th>
+			<th>数量[株/口]</th>
+			<th>配当・分配金合計（税引前）[円/現地通貨]</th>
+			<th>税額合計[円/現地通貨]</th>
+			<th>受取金額[円/現地通貨]</th>
+		</tr>
+		<tr th:each="content : ${contents}">
+			<td th:text="${content.getPaymentDay(true)}"></td>
+			<td>[[${content.getProduct()}]]</td>
+			<td th:text="${content.getAccount()}"></td>
+			<td th:text="${content.getIssueCode()}"></td>
+			<td th:text="${content.getIssue()}"></td>
+			<td th:text="${content.getUnitPrice()}"></td>
+			<td th:text="${content.getUnit()}"></td>
+			<td th:text="${content.getBeforeTaxDividendIncome()}"></td>
+			<td th:text="${content.getTax()}"></td>
+			<td th:text="${content.getAfterTaxDividendIncome()}"></td>
+		</tr>
+	</table>
 </body>
 </html>

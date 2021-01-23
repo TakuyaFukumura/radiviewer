@@ -31,20 +31,15 @@ public class MenuController {
 	@Autowired
 	HttpSession session;
 
-	/*
-	 * 参考ページ
-	 * https://qiita.com/nvtomo1029/items/316c5e8fe5d0cd92339c
-	 * https://qiita.com/misskabu/items/81fa2c774f92c63125b5
-	 */
 	@PostMapping
-	public String index(@RequestParam("csv_file")MultipartFile csv_file, Map<String, Object> model) {
+	public String index(@RequestParam("csv_file") MultipartFile csv_file, Map<String, Object> model) {
 		List<DividendDto> contents = tableLogic.fileContents(csv_file);
 		session.setAttribute("dividendDtoList", contents);
 		return "menu";
 	}
 
 	@GetMapping
-	public String indexGet( Map<String, Object> model) {
+	public String indexGet(Map<String, Object> model) {
 		//データがあるかどうかチェック
 		return "menu";
 	}

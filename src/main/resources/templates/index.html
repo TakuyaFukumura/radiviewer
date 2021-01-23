@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'index')}">
 
 <body>
 	楽天証券の配当金・分配金一覧csvファイルを選択してください
 	<form action="/menu" method="post" enctype="multipart/form-data">
-		<input type="file" name="csv_file"  accept=".csv">
+		<input type="file" name="csv_file" accept=".csv">
 		<button type="submit">アップロード</button>
 	</form>
 </body>
