@@ -3,6 +3,7 @@
  */
 package com.example.Dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -26,7 +27,7 @@ import java.util.Date;
  * @author fukumura
  *
  */
-public class DividendDto {
+public class DividendDto implements Serializable{
 	private Date paymentDay;
 	private String product;
 	private String account;
