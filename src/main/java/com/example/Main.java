@@ -33,6 +33,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -54,7 +55,7 @@ public class Main {
 		SpringApplication.run(Main.class, args);
 	}
 
-	@RequestMapping("/")
+	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	String index() {
 		session.invalidate(); // セッションクリア
 		return "index";
