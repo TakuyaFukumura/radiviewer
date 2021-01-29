@@ -3,10 +3,13 @@
 	th:replace="~{fragments/layout :: layout (~{::body},'index')}">
 
 <body>
-	楽天証券の配当金・分配金一覧csvファイルを選択してください
 	<form action="/menu" method="post" enctype="multipart/form-data">
-		<input type="file" name="csv_file" accept=".csv">
-		<button type="submit">アップロード</button>
+		<div class="form-group">
+			<label for="exampleInputFile">楽天証券の配当金・分配金一覧csvファイルを選択してください</label>
+			<input type="file" name="csv_file" accept=".csv">
+			<p class="help-block">例）dividendlist_20210111.csv</p>
+		</div>
+		<button class="btn btn-default" type="submit">アップロード</button>
 	</form>
 	<br>
 	<a href="/sample">サンプルをみる</a>
