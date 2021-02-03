@@ -6,8 +6,6 @@ package com.example.Controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Dto.DividendDto;
+import com.example.Dto.DividendDtoList;
 import com.example.Logic.MenuLogic;
 
 /**
@@ -30,12 +29,12 @@ public class MenuController {
 	MenuLogic menuLogic = new MenuLogic();
 
 	@Autowired
-	HttpSession session;
+	DividendDtoList dividendDtoList;
 
 	@PostMapping
 	public String index(@RequestParam("csv_file") MultipartFile csv_file, Map<String, Object> model) {
 		List<DividendDto> contents = menuLogic.fileContents(csv_file);
-		session.setAttribute("dividendDtoList", contents);
+		dividendDtoList.setDividendDtoList(contents);
 		if(CollectionUtils.isEmpty(contents)) { //データがあるかどうかチェック
 			return "redirect:/";
 		}
@@ -44,8 +43,7 @@ public class MenuController {
 
 	@GetMapping
 	public String index(Map<String, Object> model) {
-		@SuppressWarnings("unchecked")
-		List<DividendDto> contents = (List<DividendDto>) session.getAttribute("dividendDtoList");
+		List<DividendDto> contents = dividendDtoList.getDividendDtoList();
 		if(CollectionUtils.isEmpty(contents)) {
 			return "redirect:/";
 		} //本当はフィルターで実装したい
