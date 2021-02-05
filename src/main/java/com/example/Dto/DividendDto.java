@@ -105,6 +105,24 @@ public class DividendDto implements Serializable{
 		this.afterTaxDividendIncome = convStrToBigDecimal(afterTaxDividendIncome);
 	}
 	/**
+	 * 全ての項目のデータを渡します
+	 * @return all
+	 */
+	public String[] getAll() {
+		String[] all = new String[10];
+		all[0] = this.getPaymentDay(true);
+		all[1] = this.getProduct();
+		all[2] = this.getAccount();
+		all[3] = this.getIssueCode();
+		all[4] = this.getIssue();
+		all[5] = this.getUnitPrice().toString();
+		all[6] = this.getUnit().toString();
+		all[7] = this.getBeforeTaxDividendIncome().toString();
+		all[8] = this.getTax().toString();
+		all[9] = this.getAfterTaxDividendIncome().toString();
+		return all;
+	}
+	/**
 	 * @return paymentDay
 	 */
 	public Date getPaymentDay() {
