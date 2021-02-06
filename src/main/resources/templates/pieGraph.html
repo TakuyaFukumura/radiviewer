@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'pieGraph')}">
+
+<body>
+	<h1>円グラフ</h1>
+	単位：円<br>
+	USD/JPY 100 で計算しています。
+	<br>
+	<canvas id="pieChart"></canvas>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
+	<script>
+		var ctx = document.getElementById("pieChart");
+		var pieChart = new Chart(ctx, {
+			type : 'pie',
+			data : {
+				labels : [ [(${test[1]})],"その他" ],
+				datasets : [ {
+					backgroundColor : [ "#c73327","#e8c400","#eff2f7","#3b95d3","#BB5179", "#FAFF67", "#58A27C",
+							"#3C00FF" ],
+					data : [ [[${test[0]}]] ]
+				} ]
+			},
+			options : {
+				title : {
+					display : true,
+					text : '銘柄別  配当受取額割合'
+				}
+			}
+		});
+	</script>
+</body>
+</html>

@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Dto.DividendDto;
 import com.example.Dto.DividendDtoList;
-import com.example.Logic.SampleLogic;
+import com.example.Logic.PieGraphLogic;
 
 /**
  * @author fukumura
  *
  */
 @Controller
-@RequestMapping("/sample")
-public class SampleController {
-	SampleLogic sampleLogic = new SampleLogic();
+@RequestMapping("/pieGraph")
+public class PieGraphController {
+	PieGraphLogic pieGraphLogic = new PieGraphLogic();
 
 	@Autowired
 	DividendDtoList dividendDtoList;
@@ -30,13 +30,13 @@ public class SampleController {
 	@GetMapping
 	public String index(Map<String, Object> model) {
 
-		// 内部ファイルを読み込んで
-		List<DividendDto> contents = sampleLogic.readInternalFile("sample.csv");
+		List<DividendDto> contents = dividendDtoList.getDividendDtoList(); // 取得
 
-		// session scopeに保存して
-		dividendDtoList.setDividendDtoList(contents);
+		if (dividendDtoList != null) {
+			String[] deta = pieGraphLogic.getCartData(contents);
+			model.put("test", deta); // html側にデータ送るやつ
+		}
 
-		// menu画面に遷移
-		return "menu";
+		return "pieGraph";
 	}
 }

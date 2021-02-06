@@ -28,11 +28,11 @@ public class SampleLogic {
 	 * 内部ファイルデータを読みこむメソッドです。
 	 * @return dividendDtoList 配当CSVを読みこんだリスト
 	 */
-	public List<DividendDto> readInternalFile() {
+	public List<DividendDto> readInternalFile(String filename) {
 		CSVParser parse = null;
 
 		List<DividendDto> dividendDtoList = new ArrayList<DividendDto>(); //格納用のリスト
-		Path csv = Paths.get("src/main/resources/public/csv/sample.csv");
+		Path csv = Paths.get("src/main/resources/public/csv/" + filename);
 
 		try {
 			BufferedReader buf = Files.newBufferedReader(csv, Charset.forName("SJIS"));
