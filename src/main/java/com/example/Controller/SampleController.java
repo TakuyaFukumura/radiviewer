@@ -31,7 +31,7 @@ public class SampleController {
 	public String index(Map<String, Object> model) {
 
 		// 内部ファイルを読み込んで
-		List<DividendDto> contents = sampleLogic.readInternalFile();
+		List<DividendDto> contents = sampleLogic.readInternalFile("sample.csv");
 
 		// session scopeに保存して
 		dividendDtoList.setDividendDtoList(contents);
