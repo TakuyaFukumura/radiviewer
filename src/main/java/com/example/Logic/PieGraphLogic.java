@@ -23,9 +23,9 @@ public class PieGraphLogic {
 		List<DividendDto> contents = new ArrayList<DividendDto>();
 
 		for(DividendDto dividendDto : dividendDtoList){
-			DividendDto testDividendDto = new DividendDto(); // newが必要
-			testDividendDto.setAll(dividendDto.getAll());
-			contents.add(testDividendDto);
+			DividendDto tmpDividendDto = new DividendDto(); // newが必要
+			tmpDividendDto.setAll(dividendDto.getAll());
+			contents.add(tmpDividendDto);
 		} // sessionの値が書き換わる問題の回避策として追加
 
 		contents = exchange(contents); // 両替
