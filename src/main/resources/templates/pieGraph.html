@@ -7,7 +7,9 @@
 	単位：円<br>
 	USD/JPY 100 で計算しています。
 	<br>
+	<div class="chart-container">
 	<canvas id="pieChart"></canvas>
+	</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 
@@ -27,7 +29,8 @@
 				title : {
 					display : true,
 					text : '銘柄別  配当受取額割合'
-				}
+				},
+				maintainAspectRatio: false,
 			}
 		});
 	</script>
