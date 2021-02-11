@@ -1,17 +1,38 @@
+/* # メニュー画面CSS */
 .menu-img {
 	text-align : center
 }
-
+/* - PC用 */
 @media (min-width: 767px) {
 	.menu-img img {
 		width: 22vw;
 		margin: 1%;
 	}
 }
-
+/* - スマホ用 */
 @media (max-width: 768px) {
 	.menu-img img {
 		width: 40vw;
 		margin: 2%;
 	}
 }
+
+/* # グラフ画面CSS */
+/* - PC用 */
+@media (min-width: 767px) {
+	.chart-container {
+	position: relative;
+	width: 100vw;
+	height: 600px;
+	}
+}
+/* - スマホ用 */
+@media (max-width: 768px) {
+	.chart-container {
+	position: relative;
+	width: 100vw;
+	height: 400px;
+	}
+}
+
+
