@@ -9,26 +9,26 @@
 			<table class="table table-striped table-bordered table-condensed">
 				<tr>
 					<th>入金日</th>
-					<th>商品</th>
-					<th>口座</th>
-					<th>銘柄コード</th>
+					<th class="hidden-xs">商品</th><!-- XSサイズ以下で非表示 -->
+					<th class="hidden-xs">口座</th>
+					<th class="hidden-xs">銘柄コード</th>
 					<th>銘柄</th>
-					<th>単価[円/現地通貨]</th>
-					<th>数量[株/口]</th>
-					<th>配当・分配金合計（税引前）[円/現地通貨]</th>
-					<th>税額合計[円/現地通貨]</th>
+					<th class="hidden-xs">単価[円/現地通貨]</th>
+					<th class="hidden-xs">数量[株/口]</th>
+					<th class="hidden-xs">配当・分配金合計（税引前）[円/現地通貨]</th>
+					<th class="hidden-xs">税額合計[円/現地通貨]</th>
 					<th>受取金額[円/現地通貨]</th>
 				</tr>
 				<tr th:each="content : ${contents}">
 					<td th:text="${content.getPaymentDay(true)}"></td>
-					<td>[[${content.getProduct()}]]</td>
-					<td th:text="${content.getAccount()}"></td>
-					<td th:text="${content.getIssueCode()}"></td>
+					<td class="hidden-xs">[[${content.getProduct()}]]</td>
+					<td class="hidden-xs" th:text="${content.getAccount()}"></td>
+					<td class="hidden-xs" th:text="${content.getIssueCode()}"></td>
 					<td th:text="${content.getIssue()}"></td>
-					<td th:text="${content.getUnitPrice()}"></td>
-					<td th:text="${content.getUnit()}"></td>
-					<td th:text="${content.getBeforeTaxDividendIncome()}"></td>
-					<td th:text="${content.getTax()}"></td>
+					<td class="hidden-xs" th:text="${content.getUnitPrice()}"></td>
+					<td class="hidden-xs" th:text="${content.getUnit()}"></td>
+					<td class="hidden-xs" th:text="${content.getBeforeTaxDividendIncome()}"></td>
+					<td class="hidden-xs" th:text="${content.getTax()}"></td>
 					<td th:text="${content.getAfterTaxDividendIncome()}"></td>
 				</tr>
 			</table>
