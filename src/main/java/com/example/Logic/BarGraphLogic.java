@@ -13,7 +13,7 @@ import com.example.Dto.DividendDto;
  *
  */
 public class BarGraphLogic {
-	static int[] years = { 2019, 2020, 2021};
+
 
 	/**
 	 * 配当データのリストから棒グラフ描画用の
@@ -23,6 +23,7 @@ public class BarGraphLogic {
 	 * @return contents グラフ描画用データ配列
 	 */
 	public String[] getCartData( List<DividendDto> dividendDtoList ) {
+		int[] years = { 2019, 2020, 2021};
 		String data[] = new String[3];
 		for(int i = 0; i < years.length; i++) {
 			String[] temp = getMonthlyIncome(years[i], dividendDtoList);
