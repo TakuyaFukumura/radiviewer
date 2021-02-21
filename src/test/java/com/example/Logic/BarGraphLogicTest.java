@@ -6,6 +6,7 @@ package com.example.Logic;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +36,9 @@ class BarGraphLogicTest {
 	 */
 	@Test
 	void testGetCartData() {
+		String[] years = {"2019", "2020", "2021"};
 		List<DividendDto> dividendDtoList = sampleLogic.readInternalFile("test.csv");
-		String data[] = barGraphLogic.getCartData(dividendDtoList);
+		String data[] = barGraphLogic.getCartData( dividendDtoList, years );
 		assertEquals("0,0,24,0,56,3,60,34,5,379.00,29,7", data[0] );
 	}
 
@@ -46,8 +48,8 @@ class BarGraphLogicTest {
 	@Test
 	void testGetMonthlyIncome() {
 		List<DividendDto> dividendDtoList = sampleLogic.readInternalFile("test.csv");
-		String data[] = barGraphLogic.getMonthlyIncome(2019, dividendDtoList);
-		assertEquals("0", data[0] );
+		String data[] = barGraphLogic.getMonthlyIncome( dividendDtoList, "2019" );
+		assertEquals( "0", data[0] );
 	}
 
 	/**
@@ -55,8 +57,14 @@ class BarGraphLogicTest {
 	 */
 	@Test
 	void testExchange() {
+		List<DividendDto> dividendDtoList = sampleLogic.readInternalFile("test.csv");
+		BigDecimal rate = new BigDecimal("100"); // ドル円レート
+		dividendDtoList = barGraphLogic.exchange(dividendDtoList, rate); // 全データを両替
 
-		assertEquals(new BigDecimal(10).toBigInteger(), barGraphLogic.exchange(dividendDto).toBigInteger());
+		BigInteger actual = new BigDecimal(42).toBigInteger(); // 期待される値
+		BigInteger expected = dividendDtoList.get(3).getAfterTaxDividendIncome().toBigInteger(); // 実際の値
+
+		assertEquals( expected, actual );
 	}
 
 	/**

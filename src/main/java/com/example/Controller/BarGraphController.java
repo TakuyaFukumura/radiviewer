@@ -30,10 +30,12 @@ public class BarGraphController {
 	@GetMapping
 	public String index(Map<String, Object> model) {
 
+		String[] years = { "2019", "2020", "2021"};
+
 		List<DividendDto> contents = dividendDtoList.getDividendDtoList(); // 取得
 
 		if (dividendDtoList != null) {
-			String[] deta = barGraphLogic.getCartData(contents);
+			String[] deta = barGraphLogic.getCartData( contents, years );
 			model.put("contents", deta); // html側にデータ送るやつ
 		}
 
