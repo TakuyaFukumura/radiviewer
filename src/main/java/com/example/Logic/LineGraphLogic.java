@@ -30,16 +30,16 @@ public class LineGraphLogic {
 			contents.add(tmpDividendDto);
 		} // sessionの値が書き換わる問題の回避策として追加
 
-		contents = exchange(contents); //ドルを円に変換
+		contents = exchange(contents); //ドルを円に変換(両替)
 
 		BigDecimal[] firstCartData = createCartData( contents, year[0] ); // グラフ描画用データ
 		dataList.add(firstCartData); // 1つ目のデータを追加
 
 		for(int i = 1; i < year.length; i++) { //2つ目移行のデータを追加
-			BigDecimal[] nextCartData = createCartData( contents, year[i] );//year[i] ); // グラフ描画用データ
+			BigDecimal[] nextCartData = createCartData( contents, year[i] ); // グラフ描画用データ
 			dataList.add(nextCartData);
 		}
-		String deta = strComposition(createCumulativeList(dataList));
+		String deta = strComposition(createCumulativeList(dataList)); // 描画用に成形
 
 		return deta;
 	}
