@@ -32,18 +32,18 @@ public class MenuController {
 	DividendDtoList dividendDtoList;
 
 	@PostMapping
-	public String index(@RequestParam("csv_file") MultipartFile csv_file, Map<String, Object> model) {
-		List<DividendDto> contents = menuLogic.fileContents(csv_file);
-		dividendDtoList.setDividendDtoList(contents);
+	public String index(@RequestParam("csv_file") MultipartFile csvFile, Map<String, Object> model) {
+		List<DividendDto> contents = menuLogic.fileContents(csvFile);
+		dividendDtoList.setDividendDtoList(contents); // session beanに入れる
 		if(CollectionUtils.isEmpty(contents)) { //データがあるかどうかチェック
-			return "redirect:/";
+			return "redirect:/"; // TOP画面にリダイレクト
 		}
 		return "menu";
 	}
 
 	@GetMapping
 	public String index(Map<String, Object> model) {
-		List<DividendDto> contents = dividendDtoList.getDividendDtoList();
+		List<DividendDto> contents = dividendDtoList.getDividendDtoList(); // sessionから取り出す
 		if(CollectionUtils.isEmpty(contents)) {
 			return "redirect:/";
 		} //本当はフィルターで実装したい
