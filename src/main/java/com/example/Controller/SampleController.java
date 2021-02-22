@@ -30,10 +30,10 @@ public class SampleController {
 	@GetMapping
 	public String index(Map<String, Object> model) {
 
-		// 内部ファイルを読み込んで
+		// 内部ファイルを読み込む
 		List<DividendDto> contents = sampleLogic.readInternalFile("sample.csv");
 
-		// session scopeに保存して
+		// session beanに格納
 		dividendDtoList.setDividendDtoList(contents);
 
 		// menu画面に遷移

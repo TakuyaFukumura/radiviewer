@@ -25,24 +25,25 @@ import com.example.Dto.DividendDto;
 public class SampleLogic {
 
 	/**
-	 * 内部ファイルデータを読みこむメソッドです。
+	 * リポジトリ内部のファイルから情報を読み込んでリストを作成します
+	 * @param filename ファイル名hoge.csv
 	 * @return dividendDtoList 配当CSVを読みこんだリスト
 	 */
 	public List<DividendDto> readInternalFile(String filename) {
-		CSVParser parse = null;
 
-		List<DividendDto> dividendDtoList = new ArrayList<DividendDto>(); //格納用のリスト
-		Path csv = Paths.get("src/main/resources/public/csv/" + filename);
+		Path csv = Paths.get("src/main/resources/public/csv/" + filename); // ファイルパス
+		CSVParser parse = null;
+		List<DividendDto> dividendDtoList = new ArrayList<DividendDto>(); //配当情報格納用のリスト
 
 		try {
-			BufferedReader buf = Files.newBufferedReader(csv, Charset.forName("SJIS"));
+			BufferedReader buf = Files.newBufferedReader(csv, Charset.forName("SJIS")); // ファイル読み込み
 
 			// CSVファイルをパース
 			parse = CSVFormat.EXCEL.withHeader().parse(buf);
 			// レコードのリストに変換
 			List<CSVRecord> recordList = parse.getRecords();
 			// 各レコードを標準出力に出力＆画面表示用のリストに格納
-			for (CSVRecord record : recordList) { //参考ページ：http://itref.fc2web.com/java/commons/csv.html
+			for (CSVRecord record : recordList) { //レコード数だけループする
 				DividendDto dividendDto = new DividendDto(record.get("入金日"),
 						record.get("商品"), record.get("口座"),
 						record.get("銘柄コード"), record.get("銘柄"),
