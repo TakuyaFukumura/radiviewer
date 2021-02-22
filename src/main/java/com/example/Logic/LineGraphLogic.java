@@ -25,43 +25,22 @@ public class LineGraphLogic {
 		List<BigDecimal[]> dataList = new ArrayList<BigDecimal[]>();
 
 		for(DividendDto dividendDto : dividendDtoList){
-			DividendDto tmpDividendDto = new DividendDto(); // newが必要
-			tmpDividendDto.setAll(dividendDto.getAll());
-			contents.add(tmpDividendDto);
+			DividendDto content = new DividendDto(); // newが必要
+			content.setAll(dividendDto.getAll()); // 転記
+			contents.add(content);
 		} // sessionの値が書き換わる問題の回避策として追加
 
 		contents = exchange(contents); //ドルを円に変換(両替)
 
-		BigDecimal[] firstCartData = createCartData( contents, year[0] ); // グラフ描画用データ
-		dataList.add(firstCartData); // 1つ目のデータを追加
-
-		for(int i = 1; i < year.length; i++) { //2つ目移行のデータを追加
-			BigDecimal[] nextCartData = createCartData( contents, year[i] ); // グラフ描画用データ
-			dataList.add(nextCartData);
+		for(int i = 0; i < year.length; i++) {
+			BigDecimal[] cartData = createCartData( contents, year[i] ); // 指定年の月別配当情報作成
+			dataList.add(cartData); // 配当情報を1つリストに入れる
 		}
-		String deta = strComposition(createCumulativeList(dataList)); // 描画用に成形
+
+		List<BigDecimal> cumulativeList = createCumulativeList(dataList); // 累計データにする
+		String deta = strComposition(cumulativeList); // 描画用に成形
 
 		return deta;
-	}
-
-	/**
-	 * 累計額のリストを作成して返す
-	 * @param dataList 毎月の配当データ入り年別の配列のリスト
-	 * @return result 累計受取額のリスト
-	 */
-	public List<BigDecimal> createCumulativeList(List<BigDecimal[]> dataList ) {
-		List<BigDecimal> result = new ArrayList<BigDecimal>();
-		BigDecimal sum = new BigDecimal("0"); // 累計額
-		BigDecimal num = new BigDecimal("0"); // 各月の配当額
-		// 累計になるように合成して返す
-		for(BigDecimal[] dataArray : dataList){
-			for(int i = 0; i < dataArray.length; i++) {
-				num = sum.add(dataArray[i]); //累計＋現在の値
-				result.add(num); // リストに加える
-				sum = sum.add(dataArray[i]); //累計額を更新
-			}
-		}
-		return result;
 	}
 
 	/**
@@ -129,6 +108,28 @@ public class LineGraphLogic {
 		}
 		return cartData; // 指定された年の月毎配当受取額情報
 	}
+
+	/**
+	 * 累計額のリストを作成して返す
+	 * @param dataList 毎月の配当データ入り年別の配列のリスト
+	 * @return result 累計受取額のリスト
+	 */
+	public List<BigDecimal> createCumulativeList(List<BigDecimal[]> dataList ) {
+		List<BigDecimal> result = new ArrayList<BigDecimal>();
+		BigDecimal sum = new BigDecimal("0"); // 累計額
+		BigDecimal num = new BigDecimal("0"); // 各月の配当額
+		// 累計になるように合成して返す
+		for(BigDecimal[] dataArray : dataList){
+			for(int i = 0; i < dataArray.length; i++) {
+				num = sum.add(dataArray[i]); //累計＋現在の値
+				result.add(num); // リストに加える
+				sum = sum.add(dataArray[i]); //累計額を更新
+			}
+		}
+		return result;
+	}
+
+
 
 	/**
 	 * リストで受け取った情報をコンマ区切りで文字列に合成します<br>
