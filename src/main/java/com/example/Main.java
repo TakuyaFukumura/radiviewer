@@ -57,7 +57,7 @@ public class Main {
 
 	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	String index() {
-		dividendDtoList.setDividendDtoList(null);; // セッションクリア
+//		dividendDtoList.setDividendDtoList(null);; // セッションクリア
 		return "index";
 	}
 
