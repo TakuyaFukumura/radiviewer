@@ -24,21 +24,24 @@ public class BarGraphLogic {
 	 * @return contents グラフ描画用データ配列
 	 */
 	public String[] getCartData( List<DividendDto> dividendDtoList, String[] years ) {
-		String data[] = new String[years.length];
+
 		List<DividendDto> contents = new ArrayList<DividendDto>();
 
 		for(DividendDto dividendDto : dividendDtoList){
-			DividendDto tmpDividendDto = new DividendDto(); // newが必要
-			tmpDividendDto.setAll(dividendDto.getAll());
-			contents.add(tmpDividendDto);
+			DividendDto content = new DividendDto(); // newが必要
+			content.setAll(dividendDto.getAll()); // 全データ転記
+			contents.add(content); // 新しいリストに追加
 		} // sessionの値が書き換わる問題の回避策として追加
 
-		contents = exchange(contents, new BigDecimal(100)); //ドルを円に変換
+		String data[] = new String[years.length]; // 年毎の表示用データ格納用
+		BigDecimal rate = new BigDecimal("100"); // ドル円レート
+
+		contents = exchange(contents, rate); //ドルを円に変換
 		for(int i = 0; i < years.length; i++) {
-			String[] temp = getMonthlyIncome( contents, years[i] );
-			data[i] = createCartData(temp);
+			String[] temp = getMonthlyIncome(contents, years[i]); // 月別配当
+			data[i] = createCartData(temp); // 表示用データ成形
 		}
-		return data;
+		return data; // 年毎の表示用データ
 	}
 
 	/**
