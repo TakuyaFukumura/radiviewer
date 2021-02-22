@@ -49,19 +49,20 @@ public class BarGraphLogic {
 	 * @param dividendDto 配当情報リスト
 	 * @return afterTaxDividendIncome 税引き後、為替適用後配当受取額
 	 */
-	public List<DividendDto> exchange(List<DividendDto> dividendDtoList, BigDecimal exchangeRate) {
-		DividendDto dividendDto = new DividendDto();
-		BigDecimal afterTaxDividendIncome = new BigDecimal(0);
+	public List<DividendDto> exchange(List<DividendDto> dividendDtoList, BigDecimal rate) {
+
+		DividendDto dividendDto = new DividendDto(); // 個別配当データ格納用
+		BigDecimal afterTaxDividendIncome = new BigDecimal(0); // 受取配当額格納用
 
 		for(int i = 0; i < dividendDtoList.size(); ++i){ // データの数だけループ
-			dividendDto = dividendDtoList.get(i);
-			if("米国株式".contentEquals(dividendDto.getProduct())) {
-				afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
-				afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate); // 両替
-				dividendDtoList.get(i).setAfterTaxDividendIncome(afterTaxDividendIncome);
+			dividendDto = dividendDtoList.get(i); // 配当データを取り出す
+			if("米国株式".contentEquals(dividendDto.getProduct())) { // 商品が米国株なら
+				afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome(); // 配当金情報取得
+				afterTaxDividendIncome = afterTaxDividendIncome.multiply(rate); // 両替処理
+				dividendDtoList.get(i).setAfterTaxDividendIncome(afterTaxDividendIncome); // 両替後の配当情報をリストに戻す
 			}
 		}
-		return dividendDtoList;
+		return dividendDtoList; // ドル円両替済みの配当情報リスト
 	}
 
 	/**
