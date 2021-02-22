@@ -72,37 +72,25 @@ public class BarGraphLogic {
 	 * @return monthlyDividend 月別の配当受取額
 	 */
 	public String[] getMonthlyIncome( List<DividendDto> dividendDtoList, String year ) {
-		String[] month = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-		String[] monthlyDividend = new String[month.length];
-		BigDecimal sum = new BigDecimal(0);
-		BigDecimal afterTaxDividendIncome = new BigDecimal(0);
+		String[] month = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}; // 月を表す
+		String[] monthlyDividendIncome = new String[month.length]; // 月別配当受取額格納用
 
-		for( int i = 0; i < month.length; i++ ) {
-			sum = new BigDecimal(0);
-	        for( DividendDto dividendDto : dividendDtoList ){ // 拡張for文
-	        	if( ( year + month[i] ).equals( dividendDto.getPaymentDay(false) )) { //年月が一致しているかどうか
-	        		afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome(); //米国株式なら×100する
-	        		sum = sum.add(afterTaxDividendIncome); //合計する
+		final BigDecimal ZERO = new BigDecimal(0); // 初期化用0
+		BigDecimal sum = new BigDecimal(0); // 合計値格納用
+		BigDecimal afterTaxDividendIncome = new BigDecimal(0); // 配当額一時格納用
+
+		for( int i = 0; i < month.length; i++ ) { // 月の回数12回ループ
+			sum = ZERO; // 初期化
+	        for( DividendDto dividendDto : dividendDtoList ){ // データの数分だけループ、拡張for文
+	        	if(( year + month[i] ).equals( dividendDto.getPaymentDay(false) )) { //指定年月と一致しているかどうか
+	        		afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome(); // 配当情報を取り出す
+	        		sum = sum.add(afterTaxDividendIncome); // 合算する
 	        	}
 	        }
-	        monthlyDividend[i] = sum.toString(); //月配当受取額を文字列変換
+	        monthlyDividendIncome[i] = sum.toString(); //この月の配当受取額を文字列に変換
 		}
-		return monthlyDividend;
+		return monthlyDividendIncome; // 月別の配当受取額(文字)
 	}
-
-//	/**
-//	 * ドルは円にして、円は円のまま数値を返します
-//	 * @param dividendDto 個別配当情報
-//	 * @return afterTaxDividendIncome 税引き後、為替適用後配当受取額
-//	 */
-//	public BigDecimal exchange(DividendDto dividendDto) {
-//		BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
-//		BigDecimal exchangeRate = new BigDecimal(100);
-//		if("米国株式".contentEquals(dividendDto.getProduct())) {
-//			afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate);
-//		}
-//		return afterTaxDividendIncome;
-//	}
 
 	/**
 	 * 文字列の配列を一つの文字列に合成します<br>
