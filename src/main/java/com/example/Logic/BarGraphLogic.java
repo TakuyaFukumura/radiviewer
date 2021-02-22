@@ -93,20 +93,21 @@ public class BarGraphLogic {
 	}
 
 	/**
+	 * 月毎配当額情報をグラフ描画用に成形します<br>
 	 * 文字列の配列を一つの文字列に合成します<br>
 	 * なお、合成する際には各要素の間に「,」を入れます<br>
 	 * 例： " 0.7, 2.2, 4.0"<br>
 	 * @param getSumIncomeList 月毎配当額情報 文字列配列型
 	 * @return Stringグラフ描画用文字列
 	 */
-	public String createCartData(String[] monthlyDividend) {
-		String result = "";
-		result += monthlyDividend[0];
-		for(int i = 1; i < monthlyDividend.length; i++) {
-			result += ",";
-			result += monthlyDividend[i];
+	public String createCartData(String[] monthlyDividendIncome) {
+		String result = ""; // 合成結果格納用
+		result += monthlyDividendIncome[0]; // 初項を取り出す
+		for(int i = 1; i < monthlyDividendIncome.length; i++) { // 配列2番目からループ開始
+			result += ","; // データ間にコンマを入れる
+			result += monthlyDividendIncome[i]; // データを取り出してくっつける
 		}
-		return result;
+		return result; // 合成結果を返す
 	}
 
 }
