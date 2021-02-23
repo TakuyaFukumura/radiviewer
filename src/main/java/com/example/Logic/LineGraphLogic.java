@@ -26,7 +26,7 @@ public class LineGraphLogic {
 
 		for(DividendDto dividendDto : dividendDtoList){
 			DividendDto content = new DividendDto(); // newが必要
-			content.setAll(dividendDto.getAll()); // 転記
+			content.setAll(dividendDto.getAll()); // 配当データ転記
 			contents.add(content);
 		} // sessionの値が書き換わる問題の回避策として追加
 
@@ -53,6 +53,7 @@ public class LineGraphLogic {
 
 		String paymentDay = ""; // 配当受取日 例）2020/11/22
 		int month = 0; // 配当受取月
+		BigDecimal afterTaxDividendIncome = new BigDecimal("0");
 		BigDecimal[] cartData = new BigDecimal[12]; // 月毎の配当受取額格納用
 		Arrays.fill(cartData, new BigDecimal("0")); // 配列の初期化
 
@@ -61,12 +62,12 @@ public class LineGraphLogic {
 			paymentDay = dividendDto.getPaymentDay(true); // 配当受取日情報取得
 			String[] splitDay = paymentDay.split("/", 0); // スラッシュで分割して格納
 			month = Integer.parseInt(splitDay[1]); // 受取月をint型に変換
-			BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
+			afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
 
 			if(year.equals(splitDay[0])) { // 指定されている年と一致したら
 				switch (month){ // 配当受取月で分岐
 				  case 1:
-					  cartData[0] = cartData[0].add(afterTaxDividendIncome);
+					  cartData[0] = cartData[0].add(afterTaxDividendIncome); // 1月の配当受取額に合算する
 					  break;
 				  case 2:
 					  cartData[1] = cartData[1].add(afterTaxDividendIncome);
