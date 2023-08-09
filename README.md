@@ -5,3 +5,11 @@
 楽天証券用の配当管理アプリです
 
 https://radiviewer.herokuapp.com/
+
+## ローカル起動
+- 起動コマンド
+    ```bash
+    ./mvnw spring-boot:run
+    ```
+- 画面表示
+  - http://localhost:5000/
