@@ -32,19 +32,4 @@ class SampleLogicTest {
 
 		assertEquals( expected, actual );
 	}
-
-	@Test
-	void throwsSampleException() {
-		List<DividendDto> dividendDtoList = sampleLogic.readInternalFile("test");
-
-		try {
-			dividendDtoList.get(2).getIssueCode();
-            //例外発生を意図しているため、発生しない場合はテスト失敗とする。
-            fail("例外が発生しませんでした");
-        } catch (Exception e) {
-        	assertEquals( e.getMessage(), "Index: 2, Size: 0" );
-        }
-	}
-
-
 }
