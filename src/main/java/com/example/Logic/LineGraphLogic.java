@@ -148,7 +148,7 @@ public class LineGraphLogic {
 
 	/**
 	 * ドルは円にして、円は円のまま数値を返します
-	 * @param dividendDto 配当情報リスト
+	 * @param dividendDtoList 配当情報リスト
 	 * @return afterTaxDividendIncome 税引き後、為替適用後配当受取額
 	 */
 	public List<DividendDto> exchange(List<DividendDto> dividendDtoList) {
