@@ -35,10 +35,10 @@ public class LineGraphController {
 
 		List<DividendDto> contents = dividendDtoList.getDividendDtoList(); // 取得
 
-		String[] year = {"2019","2020","2021"}; // 表示する年を指定
+		String[] targetYear = {"2019","2020","2021"}; // 表示対象年
 
 		if (contents != null) {
-			String deta = lineGraphLogic.getCartData( contents, year );
+			String deta = lineGraphLogic.getCartData( contents, targetYear );
 			model.put("deta", deta); // html側にデータ送るやつ
 		}
 
