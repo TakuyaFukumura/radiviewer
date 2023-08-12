@@ -1,10 +1,9 @@
 # radiviewer
-[![CircleCI](https://circleci.com/gh/TakuyaFukumura/radiviewer/tree/master.svg?style=svg)](https://circleci.com/gh/TakuyaFukumura/radiviewer/tree/master)
+[![Build](https://github.com/TakuyaFukumura/radiviewer/actions/workflows/build.yml/badge.svg)](https://github.com/TakuyaFukumura/radiviewer/actions/workflows/build.yml)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/TakuyaFukumura/radiviewer?style=flat-square)
 
 楽天証券用の配当管理アプリです
 
-https://radiviewer.herokuapp.com/
 
 ## ローカル起動
 - 起動コマンド
