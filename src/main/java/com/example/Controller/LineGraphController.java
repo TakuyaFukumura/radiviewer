@@ -27,6 +27,9 @@ public class LineGraphController {
 	@Autowired
 	DividendDtoList dividendDtoList;
 
+	/*
+	 * 累計配当受取額を線グラフで表示する
+	 */
 	@GetMapping
 	public String index(Map<String, Object> model) {
 
