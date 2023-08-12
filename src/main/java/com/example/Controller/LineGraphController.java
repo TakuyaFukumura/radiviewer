@@ -38,8 +38,8 @@ public class LineGraphController {
 		String[] targetYear = {"2019","2020","2021"}; // 表示対象年
 
 		if (contents != null) {
-			String deta = lineGraphLogic.getCartData( contents, targetYear );
-			model.put("deta", deta); // html側にデータ送るやつ
+			String graphDeta = lineGraphLogic.getCartData( contents, targetYear );
+			model.put("deta", graphDeta); // View側へ渡すグラフデータ
 		}
 
 		return "lineGraph";
