@@ -18,7 +18,7 @@ public class LineGraphLogic {
 	/**
 	 * 配当情報リストから円グラフの描画に必要な情報を取り出します
 	 * @param dividendDtoList 配当情報リスト
-	 * @return deta 配当額の情報
+	 * @return data 配当額の情報
 	 */
 	public String getCartData( List<DividendDto> dividendDtoList, String[] year ) {
 		List<DividendDto> contents = new ArrayList<DividendDto>();
@@ -39,9 +39,9 @@ public class LineGraphLogic {
 			BigDecimal[] nextCartData = createCartData( contents, year[i] );//year[i] ); // グラフ描画用データ
 			dataList.add(nextCartData);
 		}
-		String deta = strComposition(createCumulativeList(dataList));
+		String data = strComposition(createCumulativeList(dataList));
 
-		return deta;
+		return data;
 	}
 
 	/**
