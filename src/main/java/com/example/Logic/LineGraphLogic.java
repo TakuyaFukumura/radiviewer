@@ -21,8 +21,8 @@ public class LineGraphLogic {
 	 * @return data 配当額の情報
 	 */
 	public String getCartData( List<DividendDto> dividendDtoList, String[] year ) {
-		List<DividendDto> contents = new ArrayList<DividendDto>();
-		List<BigDecimal[]> dataList = new ArrayList<BigDecimal[]>();
+		List<DividendDto> contents = new ArrayList<>();
+		List<BigDecimal[]> dataList = new ArrayList<>();
 
 		for(DividendDto dividendDto : dividendDtoList){
 			DividendDto tmpDividendDto = new DividendDto(); // newが必要
@@ -50,7 +50,7 @@ public class LineGraphLogic {
 	 * @return result 累計受取額のリスト
 	 */
 	public List<BigDecimal> createCumulativeList(List<BigDecimal[]> dataList ) {
-		List<BigDecimal> result = new ArrayList<BigDecimal>();
+		List<BigDecimal> result = new ArrayList<>();
 		BigDecimal sum = new BigDecimal("0"); // 累計額
 		BigDecimal num = new BigDecimal("0"); // 各月の配当額
 		// 累計になるように合成して返す
