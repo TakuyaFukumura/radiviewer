@@ -152,19 +152,15 @@ public class LineGraphLogic {
 	 * @return afterTaxDividendIncome 税引き後、為替適用後配当受取額
 	 */
 	public List<DividendDto> exchange(List<DividendDto> dividendDtoList) {
-		DividendDto dividendDto = new DividendDto();
-		BigDecimal afterTaxDividendIncome = new BigDecimal(0);
-		BigDecimal exchangeRate = new BigDecimal(100); // 為替レート
+		BigDecimal exchangeRate = new BigDecimal(100); // 為替レート TODO:将来的には設定で変更できるようにしたい
 
-		for(int i = 0; i < dividendDtoList.size(); ++i){
-			dividendDto = dividendDtoList.get(i);
-
-			if("米国株式".contentEquals(dividendDto.getProduct())) {
-				afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
-				afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate); // 掛け算
-				dividendDtoList.get(i).setAfterTaxDividendIncome(afterTaxDividendIncome);
-			}
-		}
+        for (DividendDto dividendDto : dividendDtoList) {
+            if ("米国株式".contentEquals(dividendDto.getProduct())) {
+				BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
+				BigDecimal yenIncome = afterTaxDividendIncome.multiply(exchangeRate); // 掛け算
+				dividendDto.setAfterTaxDividendIncome(yenIncome);
+            }
+        }
 		return dividendDtoList;
 	}
 
