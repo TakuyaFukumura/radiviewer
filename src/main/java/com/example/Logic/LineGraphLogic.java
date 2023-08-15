@@ -21,22 +21,16 @@ public class LineGraphLogic {
 	 * @return 配当額情報
 	 */
 	public String getCartData( List<DividendDto> dividendDtoList, String[] year ) {
-		List<DividendDto> contents = new ArrayList<>();
+
 		List<BigDecimal[]> dataList = new ArrayList<>();
 
-		for(DividendDto dividendDto : dividendDtoList){
-			DividendDto tmpDividendDto = new DividendDto(); // newが必要
-			tmpDividendDto.setAll(dividendDto.getAll());
-			contents.add(tmpDividendDto);
-		} // sessionの値が書き換わる問題の回避策として追加
+		List<DividendDto> yenDividendDtoList = exchange(dividendDtoList); //ドルを円に変換
 
-		contents = exchange(contents); //ドルを円に変換
-
-		BigDecimal[] firstCartData = createCartData( contents, year[0] ); // グラフ描画用データ
+		BigDecimal[] firstCartData = createCartData( yenDividendDtoList, year[0] ); // グラフ描画用データ
 		dataList.add(firstCartData); // 1つ目のデータを追加
 
 		for(int i = 1; i < year.length; i++) { //2つ目移行のデータを追加
-			BigDecimal[] nextCartData = createCartData( contents, year[i] );//year[i] ); // グラフ描画用データ
+			BigDecimal[] nextCartData = createCartData( yenDividendDtoList, year[i] ); // グラフ描画用データ
 			dataList.add(nextCartData);
 		}
 
