@@ -27,16 +27,19 @@ public class LineGraphController {
 	@Autowired
 	DividendDtoList dividendDtoList;
 
+	/*
+	 * 累計配当受取額を線グラフで表示する
+	 */
 	@GetMapping
 	public String index(Map<String, Object> model) {
 
-		List<DividendDto> contents = dividendDtoList.getDividendDtoList(); // 取得
+		List<DividendDto> rawData = dividendDtoList.getDividendDtoList(); // rawデータ取得
 
-		String[] year = {"2019","2020","2021"}; // 表示する年を指定
+		String[] targetYear = {"2019","2020","2021"}; // 表示対象年
 
-		if (contents != null) {
-			String deta = lineGraphLogic.getCartData( contents, year );
-			model.put("deta", deta); // html側にデータ送るやつ
+		if (rawData != null) {
+			String graphData = lineGraphLogic.getCartData( rawData, targetYear );
+			model.put("data", graphData); // View側へ渡すグラフデータ
 		}
 
 		return "lineGraph";
