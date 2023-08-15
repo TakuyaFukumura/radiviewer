@@ -70,16 +70,14 @@ public class LineGraphLogic {
 	 */
 	public BigDecimal[] createCartData( List<DividendDto> dividendDtoList, String year ) {
 
-		String paymentDay = ""; // 配当受取日 例）2020/11/22
-		int month = 0; // 配当受取月
 		BigDecimal[] cartData = new BigDecimal[12]; // 月毎の配当受取額格納用
 		Arrays.fill(cartData, new BigDecimal("0")); // 配列の初期化
 
 		for(DividendDto dividendDto : dividendDtoList){
 
-			paymentDay = dividendDto.getPaymentDay(true); // 配当受取日情報取得
+			String  paymentDay = dividendDto.getPaymentDay(true); // 配当受取日情報取得 例）2020/11/22
 			String[] splitDay = paymentDay.split("/", 0); // スラッシュで分割して格納
-			month = Integer.parseInt(splitDay[1]); // 受取月をint型に変換
+			int month = Integer.parseInt(splitDay[1]); // 受取月をint型に変換
 			BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
 
 			if(year.equals(splitDay[0])) { // 指定されている年と一致したら
