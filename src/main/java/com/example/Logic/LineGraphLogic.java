@@ -52,14 +52,12 @@ public class LineGraphLogic {
 	public List<BigDecimal> createCumulativeList(List<BigDecimal[]> dataList ) {
 		List<BigDecimal> result = new ArrayList<>();
 		BigDecimal sum = new BigDecimal("0"); // 累計額
-		BigDecimal num = new BigDecimal("0"); // 各月の配当額
 		// 累計になるように合成して返す
 		for(BigDecimal[] dataArray : dataList){
-			for(int i = 0; i < dataArray.length; i++) {
-				num = sum.add(dataArray[i]); //累計＋現在の値
-				result.add(num); // リストに加える
-				sum = sum.add(dataArray[i]); //累計額を更新
-			}
+            for (BigDecimal monthlyIncome : dataArray) { // 各月の配当額
+				sum = sum.add(monthlyIncome); //累計額を更新
+                result.add(sum); // リストに加える
+            }
 		}
 		return result;
 	}
