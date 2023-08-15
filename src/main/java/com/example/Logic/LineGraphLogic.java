@@ -18,11 +18,11 @@ public class LineGraphLogic {
 	/**
 	 * 配当情報リストから円グラフの描画に必要な情報を取り出します
 	 * @param dividendDtoList 配当情報リスト
-	 * @return data 配当額の情報
+	 * @return 配当額情報
 	 */
 	public String getCartData( List<DividendDto> dividendDtoList, String[] year ) {
-		List<DividendDto> contents = new ArrayList<DividendDto>();
-		List<BigDecimal[]> dataList = new ArrayList<BigDecimal[]>();
+		List<DividendDto> contents = new ArrayList<>();
+		List<BigDecimal[]> dataList = new ArrayList<>();
 
 		for(DividendDto dividendDto : dividendDtoList){
 			DividendDto tmpDividendDto = new DividendDto(); // newが必要
@@ -39,9 +39,8 @@ public class LineGraphLogic {
 			BigDecimal[] nextCartData = createCartData( contents, year[i] );//year[i] ); // グラフ描画用データ
 			dataList.add(nextCartData);
 		}
-		String data = strComposition(createCumulativeList(dataList));
 
-		return data;
+        return strComposition(createCumulativeList(dataList));
 	}
 
 	/**
@@ -50,16 +49,14 @@ public class LineGraphLogic {
 	 * @return result 累計受取額のリスト
 	 */
 	public List<BigDecimal> createCumulativeList(List<BigDecimal[]> dataList ) {
-		List<BigDecimal> result = new ArrayList<BigDecimal>();
+		List<BigDecimal> result = new ArrayList<>();
 		BigDecimal sum = new BigDecimal("0"); // 累計額
-		BigDecimal num = new BigDecimal("0"); // 各月の配当額
 		// 累計になるように合成して返す
 		for(BigDecimal[] dataArray : dataList){
-			for(int i = 0; i < dataArray.length; i++) {
-				num = sum.add(dataArray[i]); //累計＋現在の値
-				result.add(num); // リストに加える
-				sum = sum.add(dataArray[i]); //累計額を更新
-			}
+            for (BigDecimal monthlyIncome : dataArray) { // 各月の配当額
+				sum = sum.add(monthlyIncome); //累計額を更新
+                result.add(sum); // リストに加える
+            }
 		}
 		return result;
 	}
@@ -72,16 +69,14 @@ public class LineGraphLogic {
 	 */
 	public BigDecimal[] createCartData( List<DividendDto> dividendDtoList, String year ) {
 
-		String paymentDay = ""; // 配当受取日 例）2020/11/22
-		int month = 0; // 配当受取月
 		BigDecimal[] cartData = new BigDecimal[12]; // 月毎の配当受取額格納用
 		Arrays.fill(cartData, new BigDecimal("0")); // 配列の初期化
 
 		for(DividendDto dividendDto : dividendDtoList){
 
-			paymentDay = dividendDto.getPaymentDay(true); // 配当受取日情報取得
+			String  paymentDay = dividendDto.getPaymentDay(true); // 配当受取日情報取得 例）2020/11/22
 			String[] splitDay = paymentDay.split("/", 0); // スラッシュで分割して格納
-			month = Integer.parseInt(splitDay[1]); // 受取月をint型に変換
+			int month = Integer.parseInt(splitDay[1]); // 受取月をint型に変換
 			BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
 
 			if(year.equals(splitDay[0])) { // 指定されている年と一致したら
@@ -137,13 +132,13 @@ public class LineGraphLogic {
 	 * @return result 合成した文字列
 	 */
 	public String strComposition( List<BigDecimal> cartData ) {
-		String result = "";
-		result += cartData.get(0).toString();
+		StringBuilder result = new StringBuilder();
+		result.append(cartData.get(0).toString());
 		for(int i = 1; i < cartData.size(); i++) {
-			result += ",";
-			result += cartData.get(i).toString();
+			result.append(",");
+			result.append(cartData.get(i).toString());
 		}
-		return result;
+		return result.toString();
 	}
 
 	/**
@@ -152,19 +147,15 @@ public class LineGraphLogic {
 	 * @return afterTaxDividendIncome 税引き後、為替適用後配当受取額
 	 */
 	public List<DividendDto> exchange(List<DividendDto> dividendDtoList) {
-		DividendDto dividendDto = new DividendDto();
-		BigDecimal afterTaxDividendIncome = new BigDecimal(0);
-		BigDecimal exchangeRate = new BigDecimal(100); // 為替レート
+		BigDecimal exchangeRate = new BigDecimal(100); // 為替レート TODO:将来的には設定で変更できるようにしたい
 
-		for(int i = 0; i < dividendDtoList.size(); ++i){
-			dividendDto = dividendDtoList.get(i);
-
-			if("米国株式".contentEquals(dividendDto.getProduct())) {
-				afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
-				afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate); // 掛け算
-				dividendDtoList.get(i).setAfterTaxDividendIncome(afterTaxDividendIncome);
-			}
-		}
+        for (DividendDto dividendDto : dividendDtoList) {
+            if ("米国株式".contentEquals(dividendDto.getProduct())) {
+				BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
+				BigDecimal yenIncome = afterTaxDividendIncome.multiply(exchangeRate); // 掛け算
+				dividendDto.setAfterTaxDividendIncome(yenIncome);
+            }
+        }
 		return dividendDtoList;
 	}
 
