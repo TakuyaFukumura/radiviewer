@@ -133,13 +133,13 @@ public class LineGraphLogic {
 	 * @return result 合成した文字列
 	 */
 	public String strComposition( List<BigDecimal> cartData ) {
-		String result = "";
-		result += cartData.get(0).toString();
+		StringBuilder result = new StringBuilder();
+		result.append(cartData.get(0).toString());
 		for(int i = 1; i < cartData.size(); i++) {
-			result += ",";
-			result += cartData.get(i).toString();
+			result.append(",");
+			result.append(cartData.get(i).toString());
 		}
-		return result;
+		return result.toString();
 	}
 
 	/**
