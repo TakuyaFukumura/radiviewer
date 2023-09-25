@@ -164,13 +164,7 @@ public class PieGraphLogic {
 	 * @param monthlyDividend 合成したい情報
 	 * @return result 合成した文字列
 	 */
-	public String strComposition( String[] monthlyDividend ) {
-		String result = "";
-		result += monthlyDividend[0];
-		for(int i = 1; i < monthlyDividend.length; i++) {
-			result += ",";
-			result += monthlyDividend[i];
-		}
-		return result;
+	public String strComposition(String[] monthlyDividend) {
+		return String.join(",", monthlyDividend);
 	}
 }
