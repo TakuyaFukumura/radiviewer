@@ -6,6 +6,7 @@ package com.example.Logic;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.Dto.DividendDto;
 
@@ -17,26 +18,21 @@ public class PieGraphLogic {
 	/**
 	 * 配当情報リストから円グラフの描画に必要な情報を取り出します
 	 * @param dividendDtoList 配当情報リスト
-	 * @return deta 銘柄と配当額の情報
+	 * @return data 銘柄と配当額の情報
 	 */
 	public String[] getCartData( List<DividendDto> dividendDtoList ) {
-		List<DividendDto> contents = new ArrayList<DividendDto>();
 
-		for(DividendDto dividendDto : dividendDtoList){
-			DividendDto tmpDividendDto = new DividendDto(); // newが必要
-			tmpDividendDto.setAll(dividendDto.getAll());
-			contents.add(tmpDividendDto);
-		} // sessionの値が書き換わる問題の回避策として追加
+		List<DividendDto> contents = new ArrayList<>(dividendDtoList);
 
 		contents = exchange(contents); // 両替
 		contents = grouping(contents); // グループ化
 		contents = sort(contents); // 大きい順に並べ替え
 
-		String[] deta = new String[2];
-		deta[0] = createCartData(contents, 9); // グラフ描画用データ
-		deta[1] = createIssueData(contents, 8); // 銘柄データ
+		String[] data = new String[2];
+		data[0] = createCartData(contents, 9); // グラフ描画用データ
+		data[1] = createIssueData(contents, 8); // 銘柄データ
 
-		return deta;
+		return data;
 	}
 	/**
 	 * グループ化処理<br>
@@ -92,22 +88,17 @@ public class PieGraphLogic {
 
 	/**
 	 * ドルは円にして、円は円のまま数値を返します
-	 * @param dividendDto 個別配当情報
+	 * @param dividendDtoList 個別配当情報
 	 * @return afterTaxDividendIncome 税引き後、為替適用後配当受取額
 	 */
 	public List<DividendDto> exchange(List<DividendDto> dividendDtoList) {
-		DividendDto dividendDto = new DividendDto();
-		BigDecimal afterTaxDividendIncome = new BigDecimal(0);
 		BigDecimal exchangeRate = new BigDecimal(100); // 為替レート
 
-		//ループ開始
-		for(int i = 0; i < dividendDtoList.size(); ++i){
-			dividendDto = dividendDtoList.get(i);
-
-			if("米国株式".contentEquals(dividendDto.getProduct())) {
-				afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
-				afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate); // 掛け算
-				dividendDtoList.get(i).setAfterTaxDividendIncome(afterTaxDividendIncome);
+		for (DividendDto dividendDto : dividendDtoList) {
+			if ("米国株式".contentEquals(dividendDto.getProduct())) {
+				BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
+				afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate);
+				dividendDto.setAfterTaxDividendIncome(afterTaxDividendIncome);
 			}
 		}
 		return dividendDtoList;
@@ -122,20 +113,11 @@ public class PieGraphLogic {
 	 * @return result 銘柄文字列
 	 */
 	public String createIssueData(List<DividendDto> groupingDtoList, int num) {
-		String[] monthlyDividend = new String[num];
-		// 8個の文字列を作り出す
-		// TODO must be null check
-		for(int i = 0; i < monthlyDividend.length; ++i) {
-			monthlyDividend[i] = groupingDtoList.get(i).getIssue();
-		}
-		String result = "\"";
-		result += monthlyDividend[0];
-		for(int i = 1; i < monthlyDividend.length; i++) {
-			result += "\",\"";
-			result += monthlyDividend[i];
-		}
-		result += "\"";
-		return result;
+
+        return groupingDtoList.stream()
+				.limit(num) // 指定数だけを処理する
+				.map(dto -> dto != null ? dto.getIssue() : "") // 銘柄名取得
+				.collect(Collectors.joining("\",\"", "\"", "\"")); // 文字列合成
 	}
 
 	/**
@@ -146,24 +128,22 @@ public class PieGraphLogic {
 	 * @param num 取り出す数
 	 * @return result グラフ表示用数値
 	 */
-	public String createCartData( List<DividendDto> groupingDtoList, int num ) {
+	public String createCartData(List<DividendDto> groupingDtoList, int num) {
 		String[] monthlyDividend = new String[num];
 		// TODO must be null check
 		// 大きい順で配当額を取り出す
-		for(int i = 0; i < monthlyDividend.length; ++i) {
+		for (int i = 0; i < monthlyDividend.length; ++i) {
 			monthlyDividend[i] = groupingDtoList.get(i).getAfterTaxDividendIncome().toString();
 		}
 		// その他の額を計算して格納
 		monthlyDividend[monthlyDividend.length - 1] = "0";
-		for(int i = monthlyDividend.length - 1; i < groupingDtoList.size(); ++i) {
+		for (int i = monthlyDividend.length - 1; i < groupingDtoList.size(); ++i) {
 			BigDecimal tmp = new BigDecimal(0);
 			tmp = new BigDecimal(monthlyDividend[monthlyDividend.length - 1]).add(groupingDtoList.get(i).getAfterTaxDividendIncome());
 			monthlyDividend[monthlyDividend.length - 1] = tmp.toString();
 		}
-		// 以下、合成処理。配列を文字列にする
-		String result = strComposition(monthlyDividend);
 
-		return result;
+		return strComposition(monthlyDividend);
 	}
 
 	/**
@@ -172,13 +152,7 @@ public class PieGraphLogic {
 	 * @param monthlyDividend 合成したい情報
 	 * @return result 合成した文字列
 	 */
-	public String strComposition( String[] monthlyDividend ) {
-		String result = "";
-		result += monthlyDividend[0];
-		for(int i = 1; i < monthlyDividend.length; i++) {
-			result += ",";
-			result += monthlyDividend[i];
-		}
-		return result;
+	public String strComposition(String[] monthlyDividend) {
+		return String.join(",", monthlyDividend);
 	}
 }
