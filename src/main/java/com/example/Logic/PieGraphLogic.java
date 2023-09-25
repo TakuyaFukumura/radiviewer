@@ -5,7 +5,9 @@ package com.example.Logic;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.example.Dto.DividendDto;
@@ -47,36 +49,25 @@ public class PieGraphLogic {
 	 * @return groupingDtoList 銘柄毎に纏めた配当情報リスト
 	 */
 	public List<DividendDto> grouping( List<DividendDto> dividendDtoList ) {
-		// フラグ作成
-		boolean flag = false;
-		// 第2リスト作成
-		List<DividendDto> groupingDtoList = new ArrayList<DividendDto>();
+		Map<String, DividendDto> groupingMap = new HashMap<>();
 
-		// 第1リスト参照ループ開始
-		for(DividendDto dividendDto : dividendDtoList){
-			// フラグ初期化
-			flag = true;
-			// 第2リスト参照ループ開始
-			// TODO 分かりやすく書き直したい
-			for(int i = 0; i < groupingDtoList.size(); ++i) {
-				// 一致したら一致した箇所に加算してループ終了
-				DividendDto groupingDto = new DividendDto();
-				groupingDto = groupingDtoList.get(i);
-				if(dividendDto.getIssue().equals(groupingDto.getIssue())) {
-					BigDecimal sum = new BigDecimal(0);
-					sum = dividendDto.getAfterTaxDividendIncome().add(groupingDto.getAfterTaxDividendIncome());
-					groupingDtoList.get(i).setAfterTaxDividendIncome(sum);
-					flag = false;
-				}
-			}
-			/*
-			 * 参照中の第1リストデータと第2リストが
-			 * 一致しなかったら第2リストにadd
-			 */
-			if(flag) {
-				groupingDtoList.add(dividendDto);
+		for (DividendDto dividendDto : dividendDtoList) {
+			String issue = dividendDto.getIssue();
+			DividendDto existingDto = groupingMap.get(issue);
+
+			if (existingDto != null) {
+				// 既存のDtoが存在する場合、合計を計算
+				BigDecimal sum = existingDto.getAfterTaxDividendIncome().add(dividendDto.getAfterTaxDividendIncome());
+				existingDto.setAfterTaxDividendIncome(sum);
+			} else {
+				// 既存のDtoが存在しない場合、新しいDtoを追加
+				groupingMap.put(issue, dividendDto);
 			}
 		}
+
+		// マップからリストに変換
+		List<DividendDto> groupingDtoList = new ArrayList<>(groupingMap.values());
+
 		return groupingDtoList;
 	}
 
