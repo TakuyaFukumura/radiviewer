@@ -6,7 +6,7 @@ package com.example.Logic;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import com.example.Dto.DividendDto;
 
@@ -123,18 +123,11 @@ public class PieGraphLogic {
 	 * @return result 銘柄文字列
 	 */
 	public String createIssueData(List<DividendDto> groupingDtoList, int num) {
-		String[] monthlyDividend = new String[num];
 
-		for (int i = 0; i < monthlyDividend.length; ++i) {
-			monthlyDividend[i] = groupingDtoList.get(i) != null ? groupingDtoList.get(i).getIssue() : "";
-		}
-
-		StringJoiner joiner = new StringJoiner("\",\"", "\"", "\"");
-		for (String dividend : monthlyDividend) {
-			joiner.add(dividend);
-		}
-
-		return joiner.toString();
+        return groupingDtoList.stream()
+				.limit(num)
+				.map(dto -> dto != null ? dto.getIssue() : "")
+				.collect(Collectors.joining("\",\"", "\"", "\""));
 	}
 
 	/**
