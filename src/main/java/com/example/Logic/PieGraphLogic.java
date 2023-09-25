@@ -119,24 +119,22 @@ public class PieGraphLogic {
 	 * @param num 取り出す数
 	 * @return result グラフ表示用数値
 	 */
-	public String createCartData( List<DividendDto> groupingDtoList, int num ) {
+	public String createCartData(List<DividendDto> groupingDtoList, int num) {
 		String[] monthlyDividend = new String[num];
 		// TODO must be null check
 		// 大きい順で配当額を取り出す
-		for(int i = 0; i < monthlyDividend.length; ++i) {
+		for (int i = 0; i < monthlyDividend.length; ++i) {
 			monthlyDividend[i] = groupingDtoList.get(i).getAfterTaxDividendIncome().toString();
 		}
 		// その他の額を計算して格納
 		monthlyDividend[monthlyDividend.length - 1] = "0";
-		for(int i = monthlyDividend.length - 1; i < groupingDtoList.size(); ++i) {
+		for (int i = monthlyDividend.length - 1; i < groupingDtoList.size(); ++i) {
 			BigDecimal tmp = new BigDecimal(0);
 			tmp = new BigDecimal(monthlyDividend[monthlyDividend.length - 1]).add(groupingDtoList.get(i).getAfterTaxDividendIncome());
 			monthlyDividend[monthlyDividend.length - 1] = tmp.toString();
 		}
-		// 以下、合成処理。配列を文字列にする
-		String result = strComposition(monthlyDividend);
 
-		return result;
+		return strComposition(monthlyDividend);
 	}
 
 	/**
