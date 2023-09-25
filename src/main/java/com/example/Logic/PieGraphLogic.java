@@ -20,26 +20,21 @@ public class PieGraphLogic {
 	/**
 	 * 配当情報リストから円グラフの描画に必要な情報を取り出します
 	 * @param dividendDtoList 配当情報リスト
-	 * @return deta 銘柄と配当額の情報
+	 * @return data 銘柄と配当額の情報
 	 */
 	public String[] getCartData( List<DividendDto> dividendDtoList ) {
-		List<DividendDto> contents = new ArrayList<DividendDto>();
 
-		for(DividendDto dividendDto : dividendDtoList){
-			DividendDto tmpDividendDto = new DividendDto(); // newが必要
-			tmpDividendDto.setAll(dividendDto.getAll());
-			contents.add(tmpDividendDto);
-		} // sessionの値が書き換わる問題の回避策として追加
+		List<DividendDto> contents = new ArrayList<>(dividendDtoList);
 
 		contents = exchange(contents); // 両替
 		contents = grouping(contents); // グループ化
 		contents = sort(contents); // 大きい順に並べ替え
 
-		String[] deta = new String[2];
-		deta[0] = createCartData(contents, 9); // グラフ描画用データ
-		deta[1] = createIssueData(contents, 8); // 銘柄データ
+		String[] data = new String[2];
+		data[0] = createCartData(contents, 9); // グラフ描画用データ
+		data[1] = createIssueData(contents, 8); // 銘柄データ
 
-		return deta;
+		return data;
 	}
 	/**
 	 * グループ化処理<br>
