@@ -94,13 +94,13 @@ public class PieGraphLogic {
 	public List<DividendDto> exchange(List<DividendDto> dividendDtoList) {
 		BigDecimal exchangeRate = new BigDecimal(100); // 為替レート
 
-        for (DividendDto dividendDto : dividendDtoList) {
-            if ("米国株式".contentEquals(dividendDto.getProduct())) {
+		for (DividendDto dividendDto : dividendDtoList) {
+			if ("米国株式".contentEquals(dividendDto.getProduct())) {
 				BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
-                afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate);
+				afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate);
 				dividendDto.setAfterTaxDividendIncome(afterTaxDividendIncome);
-            }
-        }
+			}
+		}
 		return dividendDtoList;
 	}
 
