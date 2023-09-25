@@ -125,9 +125,9 @@ public class PieGraphLogic {
 	public String createIssueData(List<DividendDto> groupingDtoList, int num) {
 
         return groupingDtoList.stream()
-				.limit(num)
-				.map(dto -> dto != null ? dto.getIssue() : "")
-				.collect(Collectors.joining("\",\"", "\"", "\""));
+				.limit(num) // 指定数だけを処理する
+				.map(dto -> dto != null ? dto.getIssue() : "") // 銘柄名取得
+				.collect(Collectors.joining("\",\"", "\"", "\"")); // 文字列合成
 	}
 
 	/**
