@@ -79,24 +79,19 @@ public class PieGraphLogic {
 
 	/**
 	 * ドルは円にして、円は円のまま数値を返します
-	 * @param dividendDto 個別配当情報
+	 * @param dividendDtoList 個別配当情報
 	 * @return afterTaxDividendIncome 税引き後、為替適用後配当受取額
 	 */
 	public List<DividendDto> exchange(List<DividendDto> dividendDtoList) {
-		DividendDto dividendDto = new DividendDto();
-		BigDecimal afterTaxDividendIncome = new BigDecimal(0);
 		BigDecimal exchangeRate = new BigDecimal(100); // 為替レート
 
-		//ループ開始
-		for(int i = 0; i < dividendDtoList.size(); ++i){
-			dividendDto = dividendDtoList.get(i);
-
-			if("米国株式".contentEquals(dividendDto.getProduct())) {
-				afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
-				afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate); // 掛け算
-				dividendDtoList.get(i).setAfterTaxDividendIncome(afterTaxDividendIncome);
-			}
-		}
+        for (DividendDto dividendDto : dividendDtoList) {
+            if ("米国株式".contentEquals(dividendDto.getProduct())) {
+				BigDecimal afterTaxDividendIncome = dividendDto.getAfterTaxDividendIncome();
+                afterTaxDividendIncome = afterTaxDividendIncome.multiply(exchangeRate);
+				dividendDto.setAfterTaxDividendIncome(afterTaxDividendIncome);
+            }
+        }
 		return dividendDtoList;
 	}
 
